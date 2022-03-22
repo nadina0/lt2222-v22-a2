@@ -16,10 +16,14 @@ from sklearn.metrics import f1_score
 
 
 def sample_lines(file, lines):
-    zipped_file = gzip.open(file, 'rt')
+    zipped_file = gzip.open(file, 'rb')
     all_lines = zipped_file.readlines()
     random_lines = random.choices(all_lines, k=lines)
-    return random_lines
+    random_lines_list = []
+    for line in random_lines:
+        random_line = line.decode('utf8').strip()
+        random_lines_list.append(random_line)
+    return random_lines_list
 
 def process_sentences(file):
     tokenizer = WordPunctTokenizer()
