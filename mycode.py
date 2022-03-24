@@ -3,6 +3,8 @@ import random
 import nltk
 from nltk.tokenize import WordPunctTokenizer
 from nltk.corpus import stopwords
+nltk.download('stopwords')
+nltk.download('averaged_perceptron_tagger')
 from nltk import ngrams
 import pandas as pd
 import numpy as np
@@ -39,10 +41,10 @@ def process_sentences(file):
 
     stop_words = set(stopwords.words('english'))
     
-    temp_list = []
     final_list = []
 
     for sent in tagged_list:
+        temp_list = []
         for word, tag in sent:
             word = word.lower()
             if word in stop_words:
@@ -70,6 +72,7 @@ def create_samples(sentences, samples):
             fivegrams.append(item)
 
     random_fivegrams = random.choices(fivegrams, k=samples)
+
     final_list = []
     for pair1, pair2, pair3, pair4, pair5 in random_fivegrams:
         sample1 = pair1[0][-2:] + '_1'
@@ -151,4 +154,4 @@ if __name__ == "__main__" :
     model_rbf = train(train_X, train_y, kernel="rbf")
     print(model_linear, model_rbf)
     eval_model(model_linear, test_X, test_y)
-    eval_model(model_rbf, test_X, test_y)    
+    eval_model(model_rbf, test_X, test_y)
